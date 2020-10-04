@@ -1,6 +1,6 @@
 package com.github.tornaia.cf;
 
-import com.github.tornaia.cf.win.sysinfoapi_h;
+import com.github.tornaia.cf.win.sysinfoapi.sysinfoapi_h;
 
 public class CFApp {
 
