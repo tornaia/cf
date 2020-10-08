@@ -1,12 +1,27 @@
 package com.github.tornaia.cf;
 
 import com.github.tornaia.cf.win.cfapi.CloudFilterAPI;
-import com.github.tornaia.cf.win.cfapi.api.PlatformInfoResult;
+import com.github.tornaia.cf.win.cfapi.api.GetPlatformInfoResult;
+import com.github.tornaia.cf.win.cfapi.api.RegisterSyncRootCommand;
+import com.github.tornaia.cf.win.cfapi.api.RegisterSyncRootResult;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class CFApp {
 
-    public static void main(String[] args) {
-        PlatformInfoResult platformInfo = CloudFilterAPI.getPlatformInfo();
-        System.out.println("PlatformInfo: " + platformInfo);
+    public static void main(String[] args) throws Exception {
+        GetPlatformInfoResult getPlatformInfoResult = CloudFilterAPI.getPlatformInfo();
+        System.out.println("PlatformInfo: " + getPlatformInfoResult);
+
+        Path syncRootPath = Paths.get("C:\\temp\\mysyncroot");
+        Files.deleteIfExists(syncRootPath);
+        Files.createDirectories(syncRootPath);
+
+        String providerName = "NiceProviderName";
+        String providerVersion = "1.0";
+        RegisterSyncRootResult registerSyncRootResult = CloudFilterAPI.registerSyncRoot(new RegisterSyncRootCommand(syncRootPath, providerName, providerVersion));
+        System.out.println("RegisterSyncRootResult: " + registerSyncRootResult);
     }
 }

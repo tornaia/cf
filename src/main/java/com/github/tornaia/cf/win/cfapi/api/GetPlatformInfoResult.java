@@ -3,13 +3,13 @@ package com.github.tornaia.cf.win.cfapi.api;
 /**
  * https://docs.microsoft.com/en-us/windows/win32/api/cfapi/ns-cfapi-cf_platform_info
  */
-public class PlatformInfoResult {
+public class GetPlatformInfoResult {
 
     private final int buildNumber;
     private final int revisionNumber;
     private final int integrationNumber;
 
-    public PlatformInfoResult(int buildNumber, int revisionNumber, int integrationNumber) {
+    public GetPlatformInfoResult(int buildNumber, int revisionNumber, int integrationNumber) {
         this.buildNumber = buildNumber;
         this.revisionNumber = revisionNumber;
         this.integrationNumber = integrationNumber;
@@ -38,7 +38,7 @@ public class PlatformInfoResult {
 
     @Override
     public String toString() {
-        return "PlatformInfoResult{" +
+        return "GetPlatformInfoResult{" +
                 "buildNumber=" + buildNumber +
                 ", revisionNumber=" + revisionNumber +
                 ", integrationNumber=" + integrationNumber +
