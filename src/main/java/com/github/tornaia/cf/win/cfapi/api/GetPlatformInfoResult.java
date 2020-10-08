@@ -1,18 +1,34 @@
 package com.github.tornaia.cf.win.cfapi.api;
 
+import com.github.tornaia.cf.win.cfapi.HResult;
+
 /**
  * https://docs.microsoft.com/en-us/windows/win32/api/cfapi/ns-cfapi-cf_platform_info
  */
 public class GetPlatformInfoResult {
 
+    private final HResult hResult;
     private final int buildNumber;
     private final int revisionNumber;
     private final int integrationNumber;
 
-    public GetPlatformInfoResult(int buildNumber, int revisionNumber, int integrationNumber) {
+    private GetPlatformInfoResult(HResult hResult, int buildNumber, int revisionNumber, int integrationNumber) {
+        this.hResult = hResult;
         this.buildNumber = buildNumber;
         this.revisionNumber = revisionNumber;
         this.integrationNumber = integrationNumber;
+    }
+
+    public static GetPlatformInfoResult ok(int buildNumber, int revisionNumber, int integrationNumber) {
+        return new GetPlatformInfoResult(HResult.OK, buildNumber, revisionNumber, integrationNumber);
+    }
+
+    public static GetPlatformInfoResult error(HResult hResult) {
+        return new GetPlatformInfoResult(hResult, -1, -1, -1);
+    }
+
+    public HResult getHResult() {
+        return hResult;
     }
 
     /**
@@ -39,7 +55,8 @@ public class GetPlatformInfoResult {
     @Override
     public String toString() {
         return "GetPlatformInfoResult{" +
-                "buildNumber=" + buildNumber +
+                "hResult=" + hResult +
+                ", buildNumber=" + buildNumber +
                 ", revisionNumber=" + revisionNumber +
                 ", integrationNumber=" + integrationNumber +
                 '}';

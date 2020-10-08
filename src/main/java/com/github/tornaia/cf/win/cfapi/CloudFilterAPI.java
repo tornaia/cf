@@ -29,7 +29,6 @@ import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CfRegisterSync
  */
 public class CloudFilterAPI {
 
-    private static final int S_OK = 0;
 
     static {
         try {
@@ -49,17 +48,18 @@ public class CloudFilterAPI {
     public static GetPlatformInfoResult getPlatformInfo() {
         try (MemorySegment addressablePlatformVersion = cfapi_h.CF_PLATFORM_INFO.allocatePointer()) {
             int result = cfapi_h.CfGetPlatformInfo(addressablePlatformVersion);
-            boolean ok = result == S_OK;
+
+            HResult hResult = HResult.parse(result);
+            boolean ok = hResult == HResult.OK;
             if (!ok) {
-                throw new IllegalStateException("Failed to get PlatformInfo, unexpected result: " + result);
+                return GetPlatformInfoResult.error(hResult);
             }
 
             int buildNumber = cfapi_h.CF_PLATFORM_INFO.BuildNumber$get(addressablePlatformVersion);
             int revisionNumber = cfapi_h.CF_PLATFORM_INFO.RevisionNumber$get(addressablePlatformVersion);
-            // for unknown reason this is not supported
+            // TODO for unknown reason integration number call fails
             // int integrationNumber = cfapi_h.CF_PLATFORM_INFO.IntegrationNumber$get(addressablePlatformVersion);
-            // System.out.println("integrationNumber: " + integrationNumber);
-            return new GetPlatformInfoResult(buildNumber, revisionNumber, -1);
+            return GetPlatformInfoResult.ok(buildNumber, revisionNumber, -1);
         }
     }
 
@@ -102,14 +102,14 @@ public class CloudFilterAPI {
             int RegisterFlags = CF_REGISTER_FLAG_MARK_IN_SYNC_ON_ROOT();
 
             int result = CfRegisterSyncRoot(SyncRootPath, Registration, Policies, RegisterFlags);
-            // https://docs.microsoft.com/en-us/windows/win32/wpd_sdk/error-constants
-            // https://www.rapidtables.com/convert/number/decimal-to-hex.html
-            // decimal: -2147024809, ERROR_INVALID_PARAMETER, Hex signed 2's complement: 0x80070057, One or more arguments are not valid
-            // decimal: -2147024894, ERROR_FILE_NOT_FOUND, Hex signed 2's complement: 0x80070002, The system cannot find the file specified
-            // decimal: -2147024773, ERROR_INVALID_NAME, Hex signed 2's complement: 0x8007007B, The filename, directory name, or volume label syntax is incorrect.
-            System.out.println("result: " + result);
-        }
 
-        return null;
+            HResult hResult = HResult.parse(result);
+            boolean ok = hResult == HResult.OK;
+            if (!ok) {
+                return RegisterSyncRootResult.error(hResult);
+            }
+
+            return RegisterSyncRootResult.ok();
+        }
     }
 }

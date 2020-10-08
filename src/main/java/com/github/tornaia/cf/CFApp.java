@@ -13,15 +13,16 @@ public class CFApp {
 
     public static void main(String[] args) throws Exception {
         GetPlatformInfoResult getPlatformInfoResult = CloudFilterAPI.getPlatformInfo();
-        System.out.println("PlatformInfo: " + getPlatformInfoResult);
+        System.out.println(getPlatformInfoResult);
 
         Path syncRootPath = Paths.get("C:\\temp\\mysyncroot");
+        String providerName = "NiceProviderName";
+        String providerVersion = "1.0";
+
         Files.deleteIfExists(syncRootPath);
         Files.createDirectories(syncRootPath);
 
-        String providerName = "NiceProviderName";
-        String providerVersion = "1.0";
         RegisterSyncRootResult registerSyncRootResult = CloudFilterAPI.registerSyncRoot(new RegisterSyncRootCommand(syncRootPath, providerName, providerVersion));
-        System.out.println("RegisterSyncRootResult: " + registerSyncRootResult);
+        System.out.println(registerSyncRootResult);
     }
 }
