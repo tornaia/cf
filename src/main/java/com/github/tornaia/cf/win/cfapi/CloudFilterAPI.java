@@ -3,6 +3,8 @@ package com.github.tornaia.cf.win.cfapi;
 import com.github.tornaia.cf.win.cfapi.api.GetPlatformInfoResult;
 import com.github.tornaia.cf.win.cfapi.api.RegisterSyncRootCommand;
 import com.github.tornaia.cf.win.cfapi.api.RegisterSyncRootResult;
+import com.github.tornaia.cf.win.cfapi.api.UnregisterSyncRootCommand;
+import com.github.tornaia.cf.win.cfapi.api.UnregisterSyncRootResult;
 import com.github.tornaia.cf.win.cfapi.internal.cfapi_h;
 import com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28;
 import jdk.incubator.foreign.MemoryAddress;
@@ -17,6 +19,7 @@ import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_POPULATION_
 import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_POPULATION_POLICY_MODIFIER_NONE;
 import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_REGISTER_FLAG_MARK_IN_SYNC_ON_ROOT;
 import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CfRegisterSyncRoot;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CfUnregisterSyncRoot;
 
 /**
  * Starting in Windows 10, version 1709, Windows provides the cloud files API.
@@ -112,6 +115,28 @@ public class CloudFilterAPI {
             }
 
             return RegisterSyncRootResult.ok();
+        }
+    }
+
+    /**
+     * Unregisters a previously registered sync root.
+     */
+    public static UnregisterSyncRootResult unregisterSyncRoot(UnregisterSyncRootCommand unregisterSyncRootCommand) {
+        byte[] syncRootPath = unregisterSyncRootCommand.getSyncRootPath().toAbsolutePath().toString().getBytes(StandardCharsets.UTF_16LE);
+        try (MemorySegment SyncRootPath = MemorySegment.allocateNative(syncRootPath.length)) {
+
+            // SyncRootPath
+            SyncRootPath.asByteBuffer().put(syncRootPath);
+
+            int result = CfUnregisterSyncRoot(SyncRootPath);
+
+            HResult hResult = HResult.parse(result);
+            boolean ok = hResult == HResult.OK;
+            if (!ok) {
+                return UnregisterSyncRootResult.error(hResult);
+            }
+
+            return UnregisterSyncRootResult.ok();
         }
     }
 }

@@ -129,6 +129,17 @@ public class cfapi_h$28 {
         }
     }
 
+    public static  MethodHandle CfUnregisterSyncRoot$MH() {
+        return cfapi_h$constants$99.CfUnregisterSyncRoot$MH();
+    }
+    public static @C("HRESULT") int CfUnregisterSyncRoot (@C("LPCWSTR") Addressable SyncRootPath) {
+        try {
+            return (int)cfapi_h$constants$99.CfUnregisterSyncRoot$MH().invokeExact(SyncRootPath.address());
+        } catch (Throwable ex) {
+            throw new AssertionError(ex);
+        }
+    }
+
     public static MethodHandle CfGetPlatformInfo$MH() {
         return cfapi_h$constants$99.CfGetPlatformInfo$MH();
     }

@@ -306,4 +306,16 @@ public class cfapi_h$constants$99 extends cfapi_h$constants$0 {
             CfRegisterSyncRoot$FUNC_, false
     );
     static final java.lang.invoke.MethodHandle CfRegisterSyncRoot$MH() { return CfRegisterSyncRoot$MH_; }
+
+    static final FunctionDescriptor CfUnregisterSyncRoot$FUNC_ = FunctionDescriptor.of(C_LONG,
+            C_POINTER
+    );
+    static final jdk.incubator.foreign.FunctionDescriptor CfUnregisterSyncRoot$FUNC() { return CfUnregisterSyncRoot$FUNC_; }
+
+    static final MethodHandle CfUnregisterSyncRoot$MH_ = RuntimeHelper.downcallHandle(
+            LIBRARIES, "CfUnregisterSyncRoot",
+            "(Ljdk/incubator/foreign/MemoryAddress;)I",
+            CfUnregisterSyncRoot$FUNC_, false
+    );
+    static final java.lang.invoke.MethodHandle CfUnregisterSyncRoot$MH() { return CfUnregisterSyncRoot$MH_; }
 }
