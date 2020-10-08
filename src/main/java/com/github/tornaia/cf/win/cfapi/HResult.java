@@ -29,7 +29,7 @@ public enum HResult {
         return Arrays.stream(HResult.values())
                 .filter(e -> e.code == code)
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("Must not happen, hResult: " + code));
     }
 
     public int getCode() {
