@@ -29,7 +29,6 @@ import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CfRegisterSync
  */
 public class CloudFilterAPI {
 
-
     static {
         try {
             System.loadLibrary("cldapi");
@@ -63,6 +62,9 @@ public class CloudFilterAPI {
         }
     }
 
+    /**
+     * Initiates bi-directional communication between a sync provider and the sync filter API.
+     */
     public static RegisterSyncRootResult registerSyncRoot(RegisterSyncRootCommand registerSyncRootCommand) {
         byte[] syncRootPath = registerSyncRootCommand.getSyncRootPath().toAbsolutePath().toString().getBytes(StandardCharsets.UTF_16LE);
         byte[] providerName = registerSyncRootCommand.getProviderName().getBytes(StandardCharsets.UTF_16LE);
