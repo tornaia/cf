@@ -66,7 +66,7 @@ public class CloudFilterAPI {
     }
 
     /**
-     * Initiates bi-directional communication between a sync provider and the sync filter API.
+     * Performs a one time sync root registration.
      */
     public static RegisterSyncRootResult registerSyncRoot(RegisterSyncRootCommand registerSyncRootCommand) {
         byte[] syncRootPath = registerSyncRootCommand.getSyncRootPath().toAbsolutePath().toString().getBytes(StandardCharsets.UTF_16LE);
