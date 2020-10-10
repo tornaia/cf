@@ -20,9 +20,9 @@ import jdk.incubator.foreign.MemorySegment;
 
 import java.nio.charset.StandardCharsets;
 
-import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_HARDLINK_POLICY_NONE;
-import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_INSYNC_POLICY_NONE;
-import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CfGetPlatformInfo;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_HARDLINK_POLICY_NONE;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_INSYNC_POLICY_NONE;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CfGetPlatformInfo;
 import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_CALLBACK_TYPE_CANCEL_FETCH_DATA;
 import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_CALLBACK_TYPE_FETCH_DATA;
 import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_CALLBACK_TYPE_NONE;
