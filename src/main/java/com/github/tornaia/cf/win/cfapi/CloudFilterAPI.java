@@ -8,26 +8,35 @@ import com.github.tornaia.cf.win.cfapi.api.RegisterSyncRootResult;
 import com.github.tornaia.cf.win.cfapi.api.UnregisterSyncRootCommand;
 import com.github.tornaia.cf.win.cfapi.api.UnregisterSyncRootResult;
 import com.github.tornaia.cf.win.cfapi.internal.cfapi_h;
-import com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28;
+import com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_CALLBACK_REGISTRATION;
+import com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_CONNECTION_KEY;
+import com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_HYDRATION_POLICY;
+import com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_PLATFORM_INFO;
+import com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_POPULATION_POLICY;
+import com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_SYNC_POLICIES;
+import com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_SYNC_REGISTRATION;
 import jdk.incubator.foreign.MemoryAddress;
 import jdk.incubator.foreign.MemorySegment;
 
 import java.nio.charset.StandardCharsets;
 
-import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_CALLBACK_TYPE_CANCEL_FETCH_DATA;
-import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_CALLBACK_TYPE_FETCH_DATA;
-import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_CALLBACK_TYPE_NONE;
-import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_CONNECT_FLAG_REQUIRE_FULL_FILE_PATH;
-import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_CONNECT_FLAG_REQUIRE_PROCESS_INFO;
-import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_HYDRATION_POLICY_FULL;
-import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_HYDRATION_POLICY_MODIFIER_NONE;
-import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_PLACEHOLDER_MANAGEMENT_POLICY_DEFAULT;
-import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_POPULATION_POLICY_ALWAYS_FULL;
-import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_POPULATION_POLICY_MODIFIER_NONE;
-import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_REGISTER_FLAG_MARK_IN_SYNC_ON_ROOT;
-import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CfConnectSyncRoot;
-import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CfRegisterSyncRoot;
-import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CfUnregisterSyncRoot;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_HARDLINK_POLICY_NONE;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_INSYNC_POLICY_NONE;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CfGetPlatformInfo;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_CALLBACK_TYPE_CANCEL_FETCH_DATA;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_CALLBACK_TYPE_FETCH_DATA;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_CALLBACK_TYPE_NONE;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_CONNECT_FLAG_REQUIRE_FULL_FILE_PATH;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_CONNECT_FLAG_REQUIRE_PROCESS_INFO;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_HYDRATION_POLICY_FULL;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_HYDRATION_POLICY_MODIFIER_NONE;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_PLACEHOLDER_MANAGEMENT_POLICY_DEFAULT;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_POPULATION_POLICY_ALWAYS_FULL;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_POPULATION_POLICY_MODIFIER_NONE;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CF_REGISTER_FLAG_MARK_IN_SYNC_ON_ROOT;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CfConnectSyncRoot;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CfRegisterSyncRoot;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h.CfUnregisterSyncRoot;
 
 /**
  * Starting in Windows 10, version 1709, Windows provides the cloud files API.
@@ -56,8 +65,8 @@ public class CloudFilterAPI {
      * @return the platform version information
      */
     public static GetPlatformInfoResult getPlatformInfo() {
-        try (MemorySegment addressablePlatformVersion = cfapi_h.CF_PLATFORM_INFO.allocatePointer()) {
-            int result = cfapi_h.CfGetPlatformInfo(addressablePlatformVersion);
+        try (MemorySegment addressablePlatformVersion = CF_PLATFORM_INFO.allocatePointer()) {
+            int result = CfGetPlatformInfo(addressablePlatformVersion);
 
             HResult hResult = HResult.parse(result);
             boolean ok = hResult == HResult.OK;
@@ -65,8 +74,8 @@ public class CloudFilterAPI {
                 return GetPlatformInfoResult.error(hResult);
             }
 
-            int buildNumber = cfapi_h.CF_PLATFORM_INFO.BuildNumber$get(addressablePlatformVersion);
-            int revisionNumber = cfapi_h.CF_PLATFORM_INFO.RevisionNumber$get(addressablePlatformVersion);
+            int buildNumber = CF_PLATFORM_INFO.BuildNumber$get(addressablePlatformVersion);
+            int revisionNumber = CF_PLATFORM_INFO.RevisionNumber$get(addressablePlatformVersion);
             // TODO for unknown reason integration number call fails
             // int integrationNumber = cfapi_h.CF_PLATFORM_INFO.IntegrationNumber$get(addressablePlatformVersion);
             return GetPlatformInfoResult.ok(buildNumber, revisionNumber, -1);
@@ -81,10 +90,10 @@ public class CloudFilterAPI {
         byte[] providerName = registerSyncRootCommand.getProviderName().getBytes(StandardCharsets.UTF_16LE);
         byte[] providerVersion = registerSyncRootCommand.getProviderVersion().getBytes(StandardCharsets.UTF_16LE);
         try (MemorySegment SyncRootPath = MemorySegment.allocateNative(syncRootPath.length);
-             MemorySegment Registration = cfapi_h.CF_SYNC_REGISTRATION.allocate();
+             MemorySegment Registration = CF_SYNC_REGISTRATION.allocate();
              MemorySegment ProviderName = MemorySegment.allocateNative(providerName.length);
              MemorySegment ProviderVersion = MemorySegment.allocateNative(providerVersion.length);
-             MemorySegment Policies = cfapi_h.CF_SYNC_POLICIES.allocate()) {
+             MemorySegment Policies = CF_SYNC_POLICIES.allocate()) {
 
             // SyncRootPath
             SyncRootPath.asByteBuffer().put(syncRootPath);
@@ -92,24 +101,24 @@ public class CloudFilterAPI {
             // Registration
             ProviderName.asByteBuffer().put(providerName);
             ProviderVersion.asByteBuffer().put(providerVersion);
-            cfapi_h.CF_SYNC_REGISTRATION.StructSize$set(Registration, (int) cfapi_h.CF_SYNC_REGISTRATION.sizeof());
-            cfapi_h.CF_SYNC_REGISTRATION.ProviderName$set(Registration, ProviderName.address());
-            cfapi_h.CF_SYNC_REGISTRATION.ProviderVersion$set(Registration, ProviderVersion.address());
-            cfapi_h.CF_SYNC_REGISTRATION.SyncRootIdentity$set(Registration, MemoryAddress.NULL);
-            cfapi_h.CF_SYNC_REGISTRATION.SyncRootIdentityLength$set(Registration, 0);
-            cfapi_h.CF_SYNC_REGISTRATION.FileIdentity$set(Registration, MemoryAddress.NULL);
-            cfapi_h.CF_SYNC_REGISTRATION.FileIdentityLength$set(Registration, 0);
+            CF_SYNC_REGISTRATION.StructSize$set(Registration, (int) CF_SYNC_REGISTRATION.sizeof());
+            CF_SYNC_REGISTRATION.ProviderName$set(Registration, ProviderName.address());
+            CF_SYNC_REGISTRATION.ProviderVersion$set(Registration, ProviderVersion.address());
+            CF_SYNC_REGISTRATION.SyncRootIdentity$set(Registration, MemoryAddress.NULL);
+            CF_SYNC_REGISTRATION.SyncRootIdentityLength$set(Registration, 0);
+            CF_SYNC_REGISTRATION.FileIdentity$set(Registration, MemoryAddress.NULL);
+            CF_SYNC_REGISTRATION.FileIdentityLength$set(Registration, 0);
 
             // Policies
-            cfapi_h.CF_SYNC_POLICIES.StructSize$set(Policies, (int) cfapi_h.CF_SYNC_POLICIES.sizeof());
-            cfapi_h.CF_HYDRATION_POLICY.Primary$set(cfapi_h.CF_SYNC_POLICIES.Hydration$slice(Policies), (short) CF_HYDRATION_POLICY_FULL());
-            cfapi_h.CF_HYDRATION_POLICY.Modifier$set(cfapi_h.CF_SYNC_POLICIES.Hydration$slice(Policies), (short) CF_HYDRATION_POLICY_MODIFIER_NONE());
-            cfapi_h.CF_POPULATION_POLICY.Primary$set(cfapi_h.CF_SYNC_POLICIES.Population$slice(Policies), (short) CF_POPULATION_POLICY_ALWAYS_FULL());
-            cfapi_h.CF_POPULATION_POLICY.Modifier$set(cfapi_h.CF_SYNC_POLICIES.Population$slice(Policies), (short) CF_POPULATION_POLICY_MODIFIER_NONE());
+            CF_SYNC_POLICIES.StructSize$set(Policies, (int) CF_SYNC_POLICIES.sizeof());
+            CF_HYDRATION_POLICY.Primary$set(CF_SYNC_POLICIES.Hydration$slice(Policies), (short) CF_HYDRATION_POLICY_FULL());
+            CF_HYDRATION_POLICY.Modifier$set(CF_SYNC_POLICIES.Hydration$slice(Policies), (short) CF_HYDRATION_POLICY_MODIFIER_NONE());
+            CF_POPULATION_POLICY.Primary$set(CF_SYNC_POLICIES.Population$slice(Policies), (short) CF_POPULATION_POLICY_ALWAYS_FULL());
+            CF_POPULATION_POLICY.Modifier$set(CF_SYNC_POLICIES.Population$slice(Policies), (short) CF_POPULATION_POLICY_MODIFIER_NONE());
 
-            cfapi_h.CF_SYNC_POLICIES.InSync$set(Policies, cfapi_h$28.CF_INSYNC_POLICY_NONE());
-            cfapi_h.CF_SYNC_POLICIES.HardLink$set(Policies, cfapi_h$28.CF_HARDLINK_POLICY_NONE());
-            cfapi_h.CF_SYNC_POLICIES.PlaceholderManagement$set(Policies, CF_PLACEHOLDER_MANAGEMENT_POLICY_DEFAULT());
+            CF_SYNC_POLICIES.InSync$set(Policies, CF_INSYNC_POLICY_NONE());
+            CF_SYNC_POLICIES.HardLink$set(Policies, CF_HARDLINK_POLICY_NONE());
+            CF_SYNC_POLICIES.PlaceholderManagement$set(Policies, CF_PLACEHOLDER_MANAGEMENT_POLICY_DEFAULT());
 
             // Flags
             int RegisterFlags = CF_REGISTER_FLAG_MARK_IN_SYNC_ON_ROOT();
@@ -134,16 +143,16 @@ public class CloudFilterAPI {
     public static ConnectSyncRootResult connectSyncRoot(ConnectSyncRootCommand connectSyncRootCommand) {
         byte[] syncRootPath = connectSyncRootCommand.getSyncRootPath().toAbsolutePath().toString().getBytes(StandardCharsets.UTF_16LE);
         try (MemorySegment SyncRootPath = MemorySegment.allocateNative(syncRootPath.length);
-             MemorySegment CallbackTable = cfapi_h.CF_CALLBACK_REGISTRATION.allocateArray(3);
-             MemorySegment ConnectionKey = cfapi_h.CF_CONNECTION_KEY.allocate()) {
+             MemorySegment CallbackTable = CF_CALLBACK_REGISTRATION.allocateArray(3);
+             MemorySegment ConnectionKey = CF_CONNECTION_KEY.allocate()) {
 
             // SyncRootPath
             SyncRootPath.asByteBuffer().put(syncRootPath);
 
             // CallbackTable
-            cfapi_h.CF_CALLBACK_REGISTRATION.Type$set(CallbackTable, 0, CF_CALLBACK_TYPE_FETCH_DATA());
-            cfapi_h.CF_CALLBACK_REGISTRATION.Callback$set(CallbackTable, 0, MemoryAddress.NULL);
-            MemorySegment FetchDataCallback = cfapi_h.CF_CALLBACK_REGISTRATION.allocatePointer();
+            CF_CALLBACK_REGISTRATION.Type$set(CallbackTable, 0, CF_CALLBACK_TYPE_FETCH_DATA());
+            CF_CALLBACK_REGISTRATION.Callback$set(CallbackTable, 0, MemoryAddress.NULL);
+            MemorySegment FetchDataCallback = CF_CALLBACK_REGISTRATION.allocatePointer();
 
             MemoryAddress callback = null;
             /*
@@ -158,13 +167,13 @@ public class CloudFilterAPI {
             jdk.incubator.foreign. Callback
             */
 
-            cfapi_h.CF_CALLBACK_REGISTRATION.Type$set(CallbackTable, 1, CF_CALLBACK_TYPE_CANCEL_FETCH_DATA());
-            cfapi_h.CF_CALLBACK_REGISTRATION.Callback$set(CallbackTable, 1, MemoryAddress.NULL);
+            CF_CALLBACK_REGISTRATION.Type$set(CallbackTable, 1, CF_CALLBACK_TYPE_CANCEL_FETCH_DATA());
+            CF_CALLBACK_REGISTRATION.Callback$set(CallbackTable, 1, MemoryAddress.NULL);
 
             // Note that the sync provider only needs to register implemented callbacks, and CF_CALLBACK_REGISTRATION should always end with CF_CALLBACK_REGISTRATION_END.
             // #define CF_CALLBACK_REGISTRATION_END {CF_CALLBACK_TYPE_NONE, NULL}
-            cfapi_h.CF_CALLBACK_REGISTRATION.Type$set(CallbackTable, 2, CF_CALLBACK_TYPE_NONE());
-            cfapi_h.CF_CALLBACK_REGISTRATION.Callback$set(CallbackTable, 2, MemoryAddress.NULL);
+            CF_CALLBACK_REGISTRATION.Type$set(CallbackTable, 2, CF_CALLBACK_TYPE_NONE());
+            CF_CALLBACK_REGISTRATION.Callback$set(CallbackTable, 2, MemoryAddress.NULL);
 
             // CallbackContext
             MemoryAddress CallbackContext = MemoryAddress.NULL;
