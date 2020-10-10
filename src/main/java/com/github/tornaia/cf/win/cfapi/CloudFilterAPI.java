@@ -1,5 +1,7 @@
 package com.github.tornaia.cf.win.cfapi;
 
+import com.github.tornaia.cf.win.cfapi.api.ConnectSyncRootCommand;
+import com.github.tornaia.cf.win.cfapi.api.ConnectSyncRootResult;
 import com.github.tornaia.cf.win.cfapi.api.GetPlatformInfoResult;
 import com.github.tornaia.cf.win.cfapi.api.RegisterSyncRootCommand;
 import com.github.tornaia.cf.win.cfapi.api.RegisterSyncRootResult;
@@ -12,12 +14,18 @@ import jdk.incubator.foreign.MemorySegment;
 
 import java.nio.charset.StandardCharsets;
 
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_CALLBACK_TYPE_CANCEL_FETCH_DATA;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_CALLBACK_TYPE_FETCH_DATA;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_CALLBACK_TYPE_NONE;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_CONNECT_FLAG_REQUIRE_FULL_FILE_PATH;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_CONNECT_FLAG_REQUIRE_PROCESS_INFO;
 import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_HYDRATION_POLICY_FULL;
 import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_HYDRATION_POLICY_MODIFIER_NONE;
 import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_PLACEHOLDER_MANAGEMENT_POLICY_DEFAULT;
 import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_POPULATION_POLICY_ALWAYS_FULL;
 import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_POPULATION_POLICY_MODIFIER_NONE;
 import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CF_REGISTER_FLAG_MARK_IN_SYNC_ON_ROOT;
+import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CfConnectSyncRoot;
 import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CfRegisterSyncRoot;
 import static com.github.tornaia.cf.win.cfapi.internal.cfapi_h$28.CfUnregisterSyncRoot;
 
@@ -115,6 +123,66 @@ public class CloudFilterAPI {
             }
 
             return RegisterSyncRootResult.ok();
+        }
+    }
+
+    /**
+     * Initiates bi-directional communication between a sync provider and the sync filter API.
+     *
+     * @see <a href="https://docs.microsoft.com/en-us/windows/win32/api/cfapi/ns-cfapi-cf_callback_registration">CF_CALLBACK_REGISTRATION structure (cfapi.h)</a>
+     */
+    public static ConnectSyncRootResult connectSyncRoot(ConnectSyncRootCommand connectSyncRootCommand) {
+        byte[] syncRootPath = connectSyncRootCommand.getSyncRootPath().toAbsolutePath().toString().getBytes(StandardCharsets.UTF_16LE);
+        try (MemorySegment SyncRootPath = MemorySegment.allocateNative(syncRootPath.length);
+             MemorySegment CallbackTable = cfapi_h.CF_CALLBACK_REGISTRATION.allocateArray(3);
+             MemorySegment ConnectionKey = cfapi_h.CF_CONNECTION_KEY.allocate()) {
+
+            // SyncRootPath
+            SyncRootPath.asByteBuffer().put(syncRootPath);
+
+            // CallbackTable
+            cfapi_h.CF_CALLBACK_REGISTRATION.Type$set(CallbackTable, 0, CF_CALLBACK_TYPE_FETCH_DATA());
+            cfapi_h.CF_CALLBACK_REGISTRATION.Callback$set(CallbackTable, 0, MemoryAddress.NULL);
+            MemorySegment FetchDataCallback = cfapi_h.CF_CALLBACK_REGISTRATION.allocatePointer();
+
+            MemoryAddress callback = null;
+            /*
+            cfapi_h.callback
+            callback = cfapi_h.CF_CALLBACK_REGISTRATION.allocatePointer()allocate((a, b) -> {
+                return "";
+            }
+            })cosine_similarity$dot.allocate((a, b) -> {
+                return (CVector.x$get(a.baseAddress()) * CVector.x$get(b.baseAddress())) +
+                        (CVector.y$get(a.baseAddress()) * CVector.y$get(b.baseAddress()));
+            cfapi_h.CF_CALLBACK_REGISTRATION.ca
+            jdk.incubator.foreign. Callback
+            */
+
+            cfapi_h.CF_CALLBACK_REGISTRATION.Type$set(CallbackTable, 1, CF_CALLBACK_TYPE_CANCEL_FETCH_DATA());
+            cfapi_h.CF_CALLBACK_REGISTRATION.Callback$set(CallbackTable, 1, MemoryAddress.NULL);
+
+            // Note that the sync provider only needs to register implemented callbacks, and CF_CALLBACK_REGISTRATION should always end with CF_CALLBACK_REGISTRATION_END.
+            // #define CF_CALLBACK_REGISTRATION_END {CF_CALLBACK_TYPE_NONE, NULL}
+            cfapi_h.CF_CALLBACK_REGISTRATION.Type$set(CallbackTable, 2, CF_CALLBACK_TYPE_NONE());
+            cfapi_h.CF_CALLBACK_REGISTRATION.Callback$set(CallbackTable, 2, MemoryAddress.NULL);
+
+            // CallbackContext
+            MemoryAddress CallbackContext = MemoryAddress.NULL;
+
+            // Flags
+            int ConnectFlags = CF_CONNECT_FLAG_REQUIRE_PROCESS_INFO() | CF_CONNECT_FLAG_REQUIRE_FULL_FILE_PATH();
+
+            // ConnectionKey
+
+            int result = CfConnectSyncRoot(SyncRootPath, CallbackTable, CallbackContext, ConnectFlags, ConnectionKey);
+
+            HResult hResult = HResult.parse(result);
+            boolean ok = hResult == HResult.OK;
+            if (!ok) {
+                return ConnectSyncRootResult.error(hResult);
+            }
+
+            return ConnectSyncRootResult.ok();
         }
     }
 

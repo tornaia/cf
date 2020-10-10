@@ -1,6 +1,8 @@
 package com.github.tornaia.cf;
 
 import com.github.tornaia.cf.win.cfapi.CloudFilterAPI;
+import com.github.tornaia.cf.win.cfapi.api.ConnectSyncRootCommand;
+import com.github.tornaia.cf.win.cfapi.api.ConnectSyncRootResult;
 import com.github.tornaia.cf.win.cfapi.api.GetPlatformInfoResult;
 import com.github.tornaia.cf.win.cfapi.api.RegisterSyncRootCommand;
 import com.github.tornaia.cf.win.cfapi.api.RegisterSyncRootResult;
@@ -26,6 +28,10 @@ public class CFApp {
 
         RegisterSyncRootResult registerSyncRootResult = CloudFilterAPI.registerSyncRoot(new RegisterSyncRootCommand(syncRootPath, providerName, providerVersion));
         System.out.println(registerSyncRootResult);
+
+        ConnectSyncRootResult connectSyncRootResult = CloudFilterAPI.connectSyncRoot(new ConnectSyncRootCommand(syncRootPath));
+        System.out.println(connectSyncRootResult);
+
         UnregisterSyncRootResult unregisterSyncRootResult = CloudFilterAPI.unregisterSyncRoot(new UnregisterSyncRootCommand(syncRootPath));
         System.out.println(unregisterSyncRootResult);
     }

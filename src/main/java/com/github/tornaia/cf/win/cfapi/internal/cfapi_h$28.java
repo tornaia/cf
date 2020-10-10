@@ -129,6 +129,170 @@ public class cfapi_h$28 {
         }
     }
 
+    public static @C("int") int CF_CALLBACK_CANCEL_FLAG_NONE() {
+        return cfapi_h$constants$99.CF_CALLBACK_CANCEL_FLAG_NONE();
+    }
+    public static @C("int") int CF_CALLBACK_CANCEL_FLAG_IO_TIMEOUT() {
+        return cfapi_h$constants$99.CF_CALLBACK_CANCEL_FLAG_IO_TIMEOUT();
+    }
+    public static @C("int") int CF_CALLBACK_CANCEL_FLAG_IO_ABORTED() {
+        return cfapi_h$constants$99.CF_CALLBACK_CANCEL_FLAG_IO_ABORTED();
+    }
+    public static @C("int") int CF_CALLBACK_FETCH_DATA_FLAG_NONE() {
+        return cfapi_h$constants$99.CF_CALLBACK_FETCH_DATA_FLAG_NONE();
+    }
+    public static @C("int") int CF_CALLBACK_FETCH_DATA_FLAG_RECOVERY() {
+        return cfapi_h$constants$99.CF_CALLBACK_FETCH_DATA_FLAG_RECOVERY();
+    }
+    public static @C("int") int CF_CALLBACK_FETCH_DATA_FLAG_EXPLICIT_HYDRATION() {
+        return cfapi_h$constants$99.CF_CALLBACK_FETCH_DATA_FLAG_EXPLICIT_HYDRATION();
+    }
+    public static @C("int") int CF_CALLBACK_VALIDATE_DATA_FLAG_NONE() {
+        return cfapi_h$constants$99.CF_CALLBACK_VALIDATE_DATA_FLAG_NONE();
+    }
+    public static @C("int") int CF_CALLBACK_VALIDATE_DATA_FLAG_EXPLICIT_HYDRATION() {
+        return cfapi_h$constants$99.CF_CALLBACK_VALIDATE_DATA_FLAG_EXPLICIT_HYDRATION();
+    }
+    public static @C("int") int CF_CALLBACK_FETCH_PLACEHOLDERS_FLAG_NONE() {
+        return cfapi_h$constants$99.CF_CALLBACK_FETCH_PLACEHOLDERS_FLAG_NONE();
+    }
+    public static @C("int") int CF_CALLBACK_OPEN_COMPLETION_FLAG_NONE() {
+        return cfapi_h$constants$99.CF_CALLBACK_OPEN_COMPLETION_FLAG_NONE();
+    }
+    public static @C("int") int CF_CALLBACK_OPEN_COMPLETION_FLAG_PLACEHOLDER_UNKNOWN() {
+        return cfapi_h$constants$99.CF_CALLBACK_OPEN_COMPLETION_FLAG_PLACEHOLDER_UNKNOWN();
+    }
+    public static @C("int") int CF_CALLBACK_OPEN_COMPLETION_FLAG_PLACEHOLDER_UNSUPPORTED() {
+        return cfapi_h$constants$99.CF_CALLBACK_OPEN_COMPLETION_FLAG_PLACEHOLDER_UNSUPPORTED();
+    }
+    public static @C("int") int CF_CALLBACK_CLOSE_COMPLETION_FLAG_NONE() {
+        return cfapi_h$constants$99.CF_CALLBACK_CLOSE_COMPLETION_FLAG_NONE();
+    }
+    public static @C("int") int CF_CALLBACK_CLOSE_COMPLETION_FLAG_DELETED() {
+        return cfapi_h$constants$99.CF_CALLBACK_CLOSE_COMPLETION_FLAG_DELETED();
+    }
+    public static @C("int") int CF_CALLBACK_DEHYDRATE_FLAG_NONE() {
+        return cfapi_h$constants$99.CF_CALLBACK_DEHYDRATE_FLAG_NONE();
+    }
+    public static @C("int") int CF_CALLBACK_DEHYDRATE_FLAG_BACKGROUND() {
+        return cfapi_h$constants$99.CF_CALLBACK_DEHYDRATE_FLAG_BACKGROUND();
+    }
+    public static @C("int") int CF_CALLBACK_DEHYDRATE_COMPLETION_FLAG_NONE() {
+        return cfapi_h$constants$99.CF_CALLBACK_DEHYDRATE_COMPLETION_FLAG_NONE();
+    }
+    public static @C("int") int CF_CALLBACK_DEHYDRATE_COMPLETION_FLAG_BACKGROUND() {
+        return cfapi_h$constants$99.CF_CALLBACK_DEHYDRATE_COMPLETION_FLAG_BACKGROUND();
+    }
+    public static @C("int") int CF_CALLBACK_DEHYDRATE_COMPLETION_FLAG_DEHYDRATED() {
+        return cfapi_h$constants$99.CF_CALLBACK_DEHYDRATE_COMPLETION_FLAG_DEHYDRATED();
+    }
+    public static @C("int") int CF_CALLBACK_DELETE_FLAG_NONE() {
+        return cfapi_h$constants$99.CF_CALLBACK_DELETE_FLAG_NONE();
+    }
+    public static @C("int") int CF_CALLBACK_DELETE_FLAG_IS_DIRECTORY() {
+        return cfapi_h$constants$99.CF_CALLBACK_DELETE_FLAG_IS_DIRECTORY();
+    }
+    public static @C("int") int CF_CALLBACK_DELETE_FLAG_IS_UNDELETE() {
+        return cfapi_h$constants$99.CF_CALLBACK_DELETE_FLAG_IS_UNDELETE();
+    }
+    public static @C("int") int CF_CALLBACK_DELETE_COMPLETION_FLAG_NONE() {
+        return cfapi_h$constants$99.CF_CALLBACK_DELETE_COMPLETION_FLAG_NONE();
+    }
+    public static @C("int") int CF_CALLBACK_RENAME_FLAG_NONE() {
+        return cfapi_h$constants$99.CF_CALLBACK_RENAME_FLAG_NONE();
+    }
+    public static @C("int") int CF_CALLBACK_RENAME_FLAG_IS_DIRECTORY() {
+        return cfapi_h$constants$99.CF_CALLBACK_RENAME_FLAG_IS_DIRECTORY();
+    }
+    public static @C("int") int CF_CALLBACK_RENAME_FLAG_SOURCE_IN_SCOPE() {
+        return cfapi_h$constants$99.CF_CALLBACK_RENAME_FLAG_SOURCE_IN_SCOPE();
+    }
+    public static @C("int") int CF_CALLBACK_RENAME_FLAG_TARGET_IN_SCOPE() {
+        return cfapi_h$constants$99.CF_CALLBACK_RENAME_FLAG_TARGET_IN_SCOPE();
+    }
+    public static @C("int") int CF_CALLBACK_RENAME_COMPLETION_FLAG_NONE() {
+        return cfapi_h$constants$99.CF_CALLBACK_RENAME_COMPLETION_FLAG_NONE();
+    }
+    public static @C("int") int CF_CALLBACK_DEHYDRATION_REASON_NONE() {
+        return cfapi_h$constants$99.CF_CALLBACK_DEHYDRATION_REASON_NONE();
+    }
+    public static @C("int") int CF_CALLBACK_DEHYDRATION_REASON_USER_MANUAL() {
+        return cfapi_h$constants$99.CF_CALLBACK_DEHYDRATION_REASON_USER_MANUAL();
+    }
+    public static @C("int") int CF_CALLBACK_DEHYDRATION_REASON_SYSTEM_LOW_SPACE() {
+        return cfapi_h$constants$99.CF_CALLBACK_DEHYDRATION_REASON_SYSTEM_LOW_SPACE();
+    }
+    public static @C("int") int CF_CALLBACK_DEHYDRATION_REASON_SYSTEM_INACTIVITY() {
+        return cfapi_h$constants$99.CF_CALLBACK_DEHYDRATION_REASON_SYSTEM_INACTIVITY();
+    }
+    public static @C("int") int CF_CALLBACK_DEHYDRATION_REASON_SYSTEM_OS_UPGRADE() {
+        return cfapi_h$constants$99.CF_CALLBACK_DEHYDRATION_REASON_SYSTEM_OS_UPGRADE();
+    }
+    public static @C("int") int CF_CALLBACK_TYPE_FETCH_DATA() {
+        return cfapi_h$constants$99.CF_CALLBACK_TYPE_FETCH_DATA();
+    }
+    public static @C("int") int CF_CALLBACK_TYPE_VALIDATE_DATA() {
+        return cfapi_h$constants$99.CF_CALLBACK_TYPE_VALIDATE_DATA();
+    }
+    public static @C("int") int CF_CALLBACK_TYPE_CANCEL_FETCH_DATA() {
+        return cfapi_h$constants$99.CF_CALLBACK_TYPE_CANCEL_FETCH_DATA();
+    }
+    public static @C("int") int CF_CALLBACK_TYPE_FETCH_PLACEHOLDERS() {
+        return cfapi_h$constants$99.CF_CALLBACK_TYPE_FETCH_PLACEHOLDERS();
+    }
+    public static @C("int") int CF_CALLBACK_TYPE_CANCEL_FETCH_PLACEHOLDERS() {
+        return cfapi_h$constants$99.CF_CALLBACK_TYPE_CANCEL_FETCH_PLACEHOLDERS();
+    }
+    public static @C("int") int CF_CALLBACK_TYPE_NOTIFY_FILE_OPEN_COMPLETION() {
+        return cfapi_h$constants$99.CF_CALLBACK_TYPE_NOTIFY_FILE_OPEN_COMPLETION();
+    }
+    public static @C("int") int CF_CALLBACK_TYPE_NOTIFY_FILE_CLOSE_COMPLETION() {
+        return cfapi_h$constants$99.CF_CALLBACK_TYPE_NOTIFY_FILE_CLOSE_COMPLETION();
+    }
+    public static @C("int") int CF_CALLBACK_TYPE_NOTIFY_DEHYDRATE() {
+        return cfapi_h$constants$99.CF_CALLBACK_TYPE_NOTIFY_DEHYDRATE();
+    }
+    public static @C("int") int CF_CALLBACK_TYPE_NOTIFY_DEHYDRATE_COMPLETION() {
+        return cfapi_h$constants$99.CF_CALLBACK_TYPE_NOTIFY_DEHYDRATE_COMPLETION();
+    }
+    public static @C("int") int CF_CALLBACK_TYPE_NOTIFY_DELETE() {
+        return cfapi_h$constants$99.CF_CALLBACK_TYPE_NOTIFY_DELETE();
+    }
+    public static @C("int") int CF_CALLBACK_TYPE_NOTIFY_DELETE_COMPLETION() {
+        return cfapi_h$constants$99.CF_CALLBACK_TYPE_NOTIFY_DELETE_COMPLETION();
+    }
+    public static @C("int") int CF_CALLBACK_TYPE_NOTIFY_RENAME() {
+        return cfapi_h$constants$99.CF_CALLBACK_TYPE_NOTIFY_RENAME();
+    }
+    public static @C("int") int CF_CALLBACK_TYPE_NOTIFY_RENAME_COMPLETION() {
+        return cfapi_h$constants$99.CF_CALLBACK_TYPE_NOTIFY_RENAME_COMPLETION();
+    }
+    public static @C("int") int CF_CALLBACK_TYPE_NONE() {
+        return cfapi_h$constants$99.CF_CALLBACK_TYPE_NONE();
+    }
+    public static @C("int") int CF_CONNECT_FLAG_NONE() {
+        return cfapi_h$constants$99.CF_CONNECT_FLAG_NONE();
+    }
+    public static @C("int") int CF_CONNECT_FLAG_REQUIRE_PROCESS_INFO() {
+        return cfapi_h$constants$99.CF_CONNECT_FLAG_REQUIRE_PROCESS_INFO();
+    }
+    public static @C("int") int CF_CONNECT_FLAG_REQUIRE_FULL_FILE_PATH() {
+        return cfapi_h$constants$99.CF_CONNECT_FLAG_REQUIRE_FULL_FILE_PATH();
+    }
+    public static @C("int") int CF_CONNECT_FLAG_BLOCK_SELF_IMPLICIT_HYDRATION() {
+        return cfapi_h$constants$99.CF_CONNECT_FLAG_BLOCK_SELF_IMPLICIT_HYDRATION();
+    }
+    public static  MethodHandle CfConnectSyncRoot$MH() {
+        return cfapi_h$constants$99.CfConnectSyncRoot$MH();
+    }
+    public static @C("HRESULT") int CfConnectSyncRoot (@C("LPCWSTR") Addressable SyncRootPath, @C("const CF_CALLBACK_REGISTRATION*") Addressable CallbackTable, @C("LPCVOID") Addressable CallbackContext, @C("CF_CONNECT_FLAGS") int ConnectFlags, @C("CF_CONNECTION_KEY*") Addressable ConnectionKey) {
+        try {
+            return (int)cfapi_h$constants$99.CfConnectSyncRoot$MH().invokeExact(SyncRootPath.address(), CallbackTable.address(), CallbackContext.address(), ConnectFlags, ConnectionKey.address());
+        } catch (Throwable ex) {
+            throw new AssertionError(ex);
+        }
+    }
+
     public static  MethodHandle CfUnregisterSyncRoot$MH() {
         return cfapi_h$constants$99.CfUnregisterSyncRoot$MH();
     }
