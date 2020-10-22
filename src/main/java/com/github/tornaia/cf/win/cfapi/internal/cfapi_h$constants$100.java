@@ -5,7 +5,7 @@ import java.lang.invoke.VarHandle;
 import jdk.incubator.foreign.*;
 import static jdk.incubator.foreign.CLinker.*;
 
-public class cfapi_h$constants$100 extends cfapi_h$constants$99 {
+class cfapi_h$constants$100 extends cfapi_h$constants$99 {
 
     /* package-private */ cfapi_h$constants$100() {}
     static final FunctionDescriptor CfGetPlaceholderInfo$FUNC_ = FunctionDescriptor.of(C_LONG,

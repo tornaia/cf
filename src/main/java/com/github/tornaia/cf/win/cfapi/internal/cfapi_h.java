@@ -3209,4 +3209,71 @@ public class cfapi_h extends cfapi_h$28 {
         }
         public static @C("struct CF_SYNC_ROOT_STANDARD_INFO") MemorySegment ofAddressRestricted(MemoryAddress addr) { return RuntimeHelper.asArrayRestricted(addr, $LAYOUT(), 1); }
     }
+
+    @C("struct _FILE_BASIC_INFO")public static class _FILE_BASIC_INFO {
+
+        /* package-private */ _FILE_BASIC_INFO() {}
+        public static MemoryLayout $LAYOUT() {
+            return cfapi_h$constants$28._FILE_BASIC_INFO$struct$LAYOUT();
+        }
+        public static MemorySegment CreationTime$slice(MemorySegment seg) {
+            return RuntimeHelper.nonCloseableNonTransferableSegment(seg.asSlice(0, 8));
+        }
+        public static MemorySegment LastAccessTime$slice(MemorySegment seg) {
+            return RuntimeHelper.nonCloseableNonTransferableSegment(seg.asSlice(8, 8));
+        }
+        public static MemorySegment LastWriteTime$slice(MemorySegment seg) {
+            return RuntimeHelper.nonCloseableNonTransferableSegment(seg.asSlice(16, 8));
+        }
+        public static MemorySegment ChangeTime$slice(MemorySegment seg) {
+            return RuntimeHelper.nonCloseableNonTransferableSegment(seg.asSlice(24, 8));
+        }
+        public static VarHandle FileAttributes$VH() {
+            return cfapi_h$constants$28._FILE_BASIC_INFO$FileAttributes$VH();
+        }
+        public static  @C("DWORD") int FileAttributes$get(@C("struct _FILE_BASIC_INFO") MemorySegment seg) {
+            return (int)cfapi_h$constants$28._FILE_BASIC_INFO$FileAttributes$VH().get(seg);
+        }
+        public static  @C("DWORD") int FileAttributes$get(@C("struct _FILE_BASIC_INFO") MemorySegment seg, long index) {
+            return (int)cfapi_h$constants$28._FILE_BASIC_INFO$FileAttributes$VH().get(seg.asSlice(index*sizeof()));
+        }
+        public static void FileAttributes$set(@C("struct _FILE_BASIC_INFO") MemorySegment seg, @C("DWORD") int x) {
+            cfapi_h$constants$28._FILE_BASIC_INFO$FileAttributes$VH().set(seg, x);
+        }
+        public static void FileAttributes$set(@C("struct _FILE_BASIC_INFO") MemorySegment seg, long index, @C("DWORD") int x) {
+            cfapi_h$constants$28._FILE_BASIC_INFO$FileAttributes$VH().set(seg.asSlice(index*sizeof()), x);
+        }
+        public static long sizeof() { return $LAYOUT().byteSize(); }
+        public static @C("struct _FILE_BASIC_INFO") MemorySegment allocate() { return MemorySegment.allocateNative($LAYOUT()); }
+        public static @C("struct _FILE_BASIC_INFO") MemorySegment allocate(NativeScope scope) { return scope.allocate($LAYOUT()); }
+        public static @C("struct _FILE_BASIC_INFO[]") MemorySegment allocateArray(int len) {
+            return MemorySegment.allocateNative(MemoryLayout.ofSequence(len, $LAYOUT()));
+        }        public static @C("struct _FILE_BASIC_INFO[]") MemorySegment allocateArray(int len, NativeScope scope) {
+            return scope.allocate(MemoryLayout.ofSequence(len, $LAYOUT()));
+        }
+        public static @C("struct _FILE_BASIC_INFO*") MemorySegment allocatePointer() {
+            return MemorySegment.allocateNative(C_POINTER);
+        }
+        public static @C("struct _FILE_BASIC_INFO*") MemorySegment allocatePointer(NativeScope scope) {
+            return scope.allocate(C_POINTER);
+        }
+        public static @C("struct _FILE_BASIC_INFO") MemorySegment ofAddressRestricted(MemoryAddress addr) { return RuntimeHelper.asArrayRestricted(addr, $LAYOUT(), 1); }
+    }
+
+    @C("struct _FILE_BASIC_INFO")public static class FILE_BASIC_INFO extends _FILE_BASIC_INFO {
+
+        /* package-private */ FILE_BASIC_INFO() {}
+    }
+
+    public static interface ALLOCATE_CF_CALLBACK$CF_CALLBACK {
+
+        void apply(jdk.incubator.foreign.MemoryAddress x0, jdk.incubator.foreign.MemoryAddress x1);
+        public static  @C("void(*)(const CF_CALLBACK_INFO*,const CF_CALLBACK_PARAMETERS*)") MemorySegment allocate(ALLOCATE_CF_CALLBACK$CF_CALLBACK fi) {
+            return RuntimeHelper.upcallStub(ALLOCATE_CF_CALLBACK$CF_CALLBACK.class, fi, cfapi_h$constants$99.ALLOCATE_CF_CALLBACK$CF_CALLBACK$FUNC(), "(Ljdk/incubator/foreign/MemoryAddress;Ljdk/incubator/foreign/MemoryAddress;)V");
+        }
+        public static  @C("void(*)(const CF_CALLBACK_INFO*,const CF_CALLBACK_PARAMETERS*)") MemorySegment allocate(ALLOCATE_CF_CALLBACK$CF_CALLBACK fi, NativeScope scope) {
+            return allocate(fi).handoff(scope);
+        }
+    }
+
 }

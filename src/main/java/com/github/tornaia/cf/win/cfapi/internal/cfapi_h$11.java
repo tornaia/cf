@@ -1,6 +1,6 @@
 package com.github.tornaia.cf.win.cfapi.internal;
 
-public class cfapi_h$11 {
+class cfapi_h$11 extends cfapi_h$0 {
 
     /* package-private */ cfapi_h$11() {}
 

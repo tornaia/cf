@@ -4,7 +4,7 @@ import java.lang.invoke.VarHandle;
 import jdk.incubator.foreign.*;
 import static jdk.incubator.foreign.CLinker.*;
 
-class cfapi_h$constants$12 extends cfapi_h$constants$0 {
+class cfapi_h$constants$12 extends cfapi_h$constants$1 {
 
     /* package-private */ cfapi_h$constants$12() {}
 

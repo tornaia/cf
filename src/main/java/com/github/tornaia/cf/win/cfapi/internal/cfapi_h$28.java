@@ -6,7 +6,7 @@ import java.lang.invoke.MethodHandle;
 
 import jdk.incubator.foreign.*;
 
-public class cfapi_h$28 extends cfapi_h$11 {
+class cfapi_h$28 extends cfapi_h$11 {
 
     public static @C("int") int CF_PLACEHOLDER_CREATE_FLAG_NONE() {
         return cfapi_h$constants$99.CF_PLACEHOLDER_CREATE_FLAG_NONE();
@@ -295,6 +295,16 @@ public class cfapi_h$28 extends cfapi_h$11 {
     }
     public static @C("int") int CF_CALLBACK_DEHYDRATION_REASON_SYSTEM_OS_UPGRADE() {
         return cfapi_h$constants$99.CF_CALLBACK_DEHYDRATION_REASON_SYSTEM_OS_UPGRADE();
+    }
+    public static  MethodHandle OnFetchData$MH() {
+        return cfapi_h$constants$99.OnFetchData$MH();
+    }
+    public static void OnFetchData (@C("const CF_CALLBACK_INFO*") Addressable callbackInfo, @C("const CF_CALLBACK_PARAMETERS*") Addressable callbackParameters) {
+        try {
+            cfapi_h$constants$99.OnFetchData$MH().invokeExact(callbackInfo.address(), callbackParameters.address());
+        } catch (Throwable ex) {
+            throw new AssertionError(ex);
+        }
     }
     public static @C("int") int CF_CALLBACK_TYPE_FETCH_DATA() {
         return cfapi_h$constants$99.CF_CALLBACK_TYPE_FETCH_DATA();

@@ -14,7 +14,7 @@ import static jdk.incubator.foreign.CLinker.C_POINTER;
 import static jdk.incubator.foreign.CLinker.C_INT;
 import static jdk.incubator.foreign.CLinker.C_LONGLONG;
 
-public class cfapi_h$constants$99 extends cfapi_h$constants$12 {
+class cfapi_h$constants$99 extends cfapi_h$constants$28 {
 
     static final MemoryLayout CF_CONNECTION_KEY__$struct$LAYOUT_ = MemoryLayout.ofStruct(
             C_LONGLONG.withName("Internal")
@@ -1183,6 +1183,19 @@ public class cfapi_h$constants$99 extends cfapi_h$constants$12 {
 
     static final VarHandle CF_CALLBACK_PARAMETERS$RenameCompletion$SourcePath$VH_ = MemoryHandles.asAddressVarHandle(CF_CALLBACK_PARAMETERS$RenameCompletion$struct$LAYOUT_.varHandle(long.class, MemoryLayout.PathElement.groupElement("SourcePath")));
     static final java.lang.invoke.VarHandle CF_CALLBACK_PARAMETERS$RenameCompletion$SourcePath$VH() { return CF_CALLBACK_PARAMETERS$RenameCompletion$SourcePath$VH_; }
+
+    static final FunctionDescriptor OnFetchData$FUNC_ = FunctionDescriptor.ofVoid(
+            C_POINTER,
+            C_POINTER
+    );
+    static final jdk.incubator.foreign.FunctionDescriptor OnFetchData$FUNC() { return OnFetchData$FUNC_; }
+
+    static final MethodHandle OnFetchData$MH_ = RuntimeHelper.downcallHandle(
+            LIBRARIES, "OnFetchData",
+            "(Ljdk/incubator/foreign/MemoryAddress;Ljdk/incubator/foreign/MemoryAddress;)V",
+            OnFetchData$FUNC_, false
+    );
+    static final java.lang.invoke.MethodHandle OnFetchData$MH() { return OnFetchData$MH_; }
 
     static final int CF_CALLBACK_TYPE_FETCH_DATA() { return (int)0L; }
 
@@ -2427,4 +2440,21 @@ public class cfapi_h$constants$99 extends cfapi_h$constants$12 {
     static final VarHandle CF_PLACEHOLDER_STANDARD_INFO$FileIdentityLength$VH_ = CF_PLACEHOLDER_STANDARD_INFO$struct$LAYOUT_.varHandle(int.class, MemoryLayout.PathElement.groupElement("FileIdentityLength"));
     static final java.lang.invoke.VarHandle CF_PLACEHOLDER_STANDARD_INFO$FileIdentityLength$VH() { return CF_PLACEHOLDER_STANDARD_INFO$FileIdentityLength$VH_; }
 
+    static final FunctionDescriptor ALLOCATE_CF_CALLBACK$FUNC_ = FunctionDescriptor.ofVoid(
+            C_POINTER
+    );
+    static final jdk.incubator.foreign.FunctionDescriptor ALLOCATE_CF_CALLBACK$FUNC() { return ALLOCATE_CF_CALLBACK$FUNC_; }
+
+    static final MethodHandle ALLOCATE_CF_CALLBACK$MH_ = RuntimeHelper.downcallHandle(
+            LIBRARIES, "ALLOCATE_CF_CALLBACK",
+            "(Ljdk/incubator/foreign/MemoryAddress;)V",
+            ALLOCATE_CF_CALLBACK$FUNC_, false
+    );
+    static final java.lang.invoke.MethodHandle ALLOCATE_CF_CALLBACK$MH() { return ALLOCATE_CF_CALLBACK$MH_; }
+
+    static final FunctionDescriptor ALLOCATE_CF_CALLBACK$CF_CALLBACK$FUNC_ = FunctionDescriptor.ofVoid(
+            C_POINTER,
+            C_POINTER
+    );
+    static final jdk.incubator.foreign.FunctionDescriptor ALLOCATE_CF_CALLBACK$CF_CALLBACK$FUNC() { return ALLOCATE_CF_CALLBACK$CF_CALLBACK$FUNC_; }
 }

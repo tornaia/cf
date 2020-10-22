@@ -15,8 +15,10 @@ public enum HResult {
     OK(0, "OK"),
     ERROR_INVALID_PARAMETER(-2147024809, "One or more arguments are not valid"),
     ERROR_FILE_NOT_FOUND(-2147024894, "The system cannot find the file specified"),
-    ERROR_UNSUPPORTED_OPERATION(-2147024506, "This operation is only supported in a SyncRoot."),
-    ERROR_INVALID_NAME(-2147024773, "The filename, directory name, or volume label syntax is incorrect");
+    ERROR_UNSUPPORTED_OPERATION(-2147024506, "This operation is only supported in a SyncRoot"),
+    ERROR_INVALID_NAME(-2147024773, "The filename, directory name, or volume label syntax is incorrect"),
+    ERROR_INVALID_CLOUD_OPERATION(-2147024516, "The cloud operation is invalid"),
+    ERROR_HEAP_CORRUPTION(-1073740940, "Heap has been corrupted");
 
     private final int code;
     private final String message;
